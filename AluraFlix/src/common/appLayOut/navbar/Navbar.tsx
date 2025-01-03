@@ -1,6 +1,6 @@
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
-import aluraLogo from "../../assets/aluraflix.jpg";
+import aluraLogo from "../../../assets/aluraflix.jpg";
 
 export const Navbar = () => {
   return (
