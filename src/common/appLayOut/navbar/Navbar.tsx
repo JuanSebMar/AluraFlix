@@ -1,10 +1,22 @@
-import { Box, Group, ThemeIcon } from "@mantine/core";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import { Box, em, Group, Paper, ThemeIcon } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { IconHome } from "@tabler/icons-react";
 import aluraLogo from "../../../assets/aluraflix.jpg";
 
 export const Navbar = () => {
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+
   return (
-    <Box style={{ backgroundColor: "#333", padding: "10px" }}>
+    <Box
+      style={{
+        zIndex: 100,
+        position: "fixed",
+        top: 0,
+        width: "100vw",
+        boxShadow: "var(--mantine-shadow-xs)",
+      }}
+    >
+      <Paper px={isMobile ? 0 : 7} py={isMobile && 10}></Paper>
       <Group style={{ justifyContent: "space-between" }}>
         <img
           style={{ maxWidth: "200px" }}
@@ -13,7 +25,7 @@ export const Navbar = () => {
         />
         <Box>
           <ThemeIcon>
-            <HomeRoundedIcon style={{ color: "#fff", fontSize: "30px" }} />
+            <IconHome style={{ color: "#fff", fontSize: "30px" }} />
           </ThemeIcon>
         </Box>
       </Group>
