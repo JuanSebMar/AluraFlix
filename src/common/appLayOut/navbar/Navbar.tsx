@@ -1,9 +1,9 @@
-import { Box, em, Group, Paper, ThemeIcon } from "@mantine/core";
+import { Box, Button, em, Flex, Paper, ThemeIcon } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { IconHome } from "@tabler/icons-react";
+import { IconHome, IconMenu2 } from "@tabler/icons-react";
 import aluraLogo from "../../../assets/aluraflix.jpg";
 
-export const Navbar = () => {
+export const Navbar = ({ toggleDrawer }) => {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   return (
@@ -16,19 +16,28 @@ export const Navbar = () => {
         boxShadow: "var(--mantine-shadow-xs)",
       }}
     >
-      <Paper px={isMobile ? 0 : 7} py={isMobile && 10}></Paper>
-      <Group style={{ justifyContent: "space-between" }}>
-        <img
-          style={{ maxWidth: "200px" }}
-          src={aluraLogo}
-          alt="AluraFlix Logo"
-        />
-        <Box>
-          <ThemeIcon>
-            <IconHome style={{ color: "#fff", fontSize: "30px" }} />
-          </ThemeIcon>
-        </Box>
-      </Group>
+      <Paper px={isMobile ? 0 : 7} py={isMobile && 10}>
+        <Button
+          onClick={() => toggleDrawer()}
+          hiddenFrom="md"
+          variant="transparent"
+          c={"white"}
+        >
+          <IconMenu2 fontSize={20} />
+        </Button>
+        <Flex style={{ justifyContent: "space-between" }}>
+          <img
+            style={{ maxWidth: "200px" }}
+            src={aluraLogo}
+            alt="AluraFlix Logo"
+          />
+          <Box>
+            <ThemeIcon>
+              <IconHome style={{ color: "#fff", fontSize: "30px" }} />
+            </ThemeIcon>
+          </Box>
+        </Flex>
+      </Paper>
     </Box>
   );
 };
