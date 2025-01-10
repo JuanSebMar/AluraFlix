@@ -1,19 +1,19 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Flex, Text } from "@mantine/core";
 
 export const Footer = () => {
   return (
     <Box
       component={"footer"}
-      sx={{
+      style={{
         position: "absolute",
         color: "white",
       }}
     >
-      <Container maxWidth="lg">
-        <Typography variant="body2" align="center">
+      <Flex>
+        <Text variant="body2">
           © 2024 Alura Geek. Todos los derechos reservados.
-        </Typography>
-      </Container>
+        </Text>
+      </Flex>
     </Box>
   );
 };
