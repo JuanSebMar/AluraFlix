@@ -1,12 +1,5 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Modal,
-  Typography,
-} from "@mui/material";
-import React, { useState } from "react";
+import { Card, SimpleGrid, Text } from "@mantine/core";
+import { useState } from "react";
 
 interface IVideo {
   title: string;
@@ -34,67 +27,94 @@ const VideoCard: React.FC<VideoCardProps> = ({ videos }) => {
     setCurrentVideoUrl("");
   };
 
+  const getIframeSrc = (url: string) => {
+    if (url.includes("youtube.com/watch")) {
+      return url.replace("watch?v=", "embed/");
+    }
+    return url;
+  };
+
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-        gap: 3,
-      }}
-    >
+    <SimpleGrid cols={{ base: 1, lg: 5 }}>
       {videos.map((video, index) => (
         <Card
+          bg={"dark"}
           key={index}
-          sx={{ maxWidth: 345, cursor: "pointer" }}
+          style={{ cursor: "pointer" }}
           onClick={() => handleOpen(video.url)}
         >
-          <CardMedia
-            component="img"
-            height="140"
-            image={video.image}
-            alt={video.title}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h6" component="div">
+          <Card.Section>
+            {video.url.includes("youtube.com") ? (
+              <iframe
+                width="100%"
+                height="200px"
+                src={getIframeSrc(video.url)}
+                title={video.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ borderRadius: "8px" }}
+              ></iframe>
+            ) : (
+              <video
+                controls
+                style={{ width: "100%", borderRadius: "8px" }}
+                preload="metadata"
+              >
+                <source src={video.url} type="video/mp4" />
+              </video>
+            )}
+          </Card.Section>
+          <Card.Section bg={"dark"} c={"#fff"}>
+            <Text variant="h6" component="div">
               {video.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {video.description}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              Category: {video.category}
-            </Typography>
-          </CardContent>
+            </Text>
+            <Text variant="body2">{video.description}</Text>
+            <Text variant="caption">Category: {video.category}</Text>
+          </Card.Section>
         </Card>
       ))}
-
-      {/* Modal para reproducir video */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-      >
-        <Box
-          sx={{
-            width: "80%",
-            maxWidth: 800,
-            backgroundColor: "background.paper",
-            p: 2,
-            borderRadius: 2,
-          }}
-        >
-          <iframe
-            width="100%"
-            height="450px"
-            src={currentVideoUrl.replace("watch?v=", "embed/")}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </Box>
-      </Modal>
-    </Box>
+    </SimpleGrid>
   );
 };
 
 export default VideoCard;
+
+{
+  /* <Modal
+        opened={open}
+        onClose={handleClose}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          style={{
+            width: "80%",
+            maxWidth: 800,
+            backgroundColor: "background.paper",
+            padding: "16px",
+            borderRadius: "8px",
+          }}
+        >
+          {currentVideoUrl.includes("youtube.com") ? (
+            <iframe
+              width="100%"
+              height="450px"
+              src={getIframeSrc(currentVideoUrl)}
+              title="Video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <video
+              controls
+              style={{ width: "100%" }}
+              preload="metadata"
+              src={currentVideoUrl}
+            ></video>
+          )}
+        </Box>
+      </Modal> */
+}

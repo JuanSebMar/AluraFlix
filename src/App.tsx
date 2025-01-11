@@ -1,12 +1,7 @@
-import "./App.css";
 import { RouterRoutes } from "./routes/RouterRoutes";
 
 function App() {
-  return (
-    <>
-      <RouterRoutes />
-    </>
-  );
+  return <RouterRoutes />;
 }
 
 export default App;

@@ -16,13 +16,7 @@ export const videos: IVideo[] = [
     description:
       "A fast-paced introduction to TypeScript for JavaScript developers.",
   },
-  {
-    title: "JavaScript: The Hard Parts",
-    category: "Programming",
-    url: "https://www.youtube.com/watch?v=QIwlt6E5m2k",
-    image: "https://img.youtube.com/vi/QIwlt6E5m2k/maxresdefault.jpg",
-    description: "Dive deep into the hard parts of JavaScript with this video.",
-  },
+
   {
     title: "How the Internet Works",
     category: "Technology",
@@ -30,13 +24,7 @@ export const videos: IVideo[] = [
     image: "https://img.youtube.com/vi/x3c1ih2NJEg/maxresdefault.jpg",
     description: "Learn the basics of how the internet works in this video.",
   },
-  {
-    title: "10 CSS Tricks You Need to Know",
-    category: "Web Design",
-    url: "https://www.youtube.com/watch?v=YfoApbQh8z8",
-    image: "https://img.youtube.com/vi/YfoApbQh8z8/maxresdefault.jpg",
-    description: "Improve your CSS skills with these 10 essential tricks.",
-  },
+
   {
     title: "Docker Simplified",
     category: "DevOps",
