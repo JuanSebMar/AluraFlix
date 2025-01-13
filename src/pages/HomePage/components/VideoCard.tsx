@@ -1,5 +1,4 @@
 import { Card, SimpleGrid, Text } from "@mantine/core";
-import { useState } from "react";
 
 interface IVideo {
   title: string;
@@ -14,19 +13,6 @@ interface VideoCardProps {
 }
 
 const VideoCard: React.FC<VideoCardProps> = ({ videos }) => {
-  const [open, setOpen] = useState(false);
-  const [currentVideoUrl, setCurrentVideoUrl] = useState("");
-
-  const handleOpen = (url: string) => {
-    setCurrentVideoUrl(url);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setCurrentVideoUrl("");
-  };
-
   const getIframeSrc = (url: string) => {
     if (url.includes("youtube.com/watch")) {
       return url.replace("watch?v=", "embed/");
@@ -37,12 +23,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ videos }) => {
   return (
     <SimpleGrid cols={{ base: 1, lg: 5 }}>
       {videos.map((video, index) => (
-        <Card
-          bg={"dark"}
-          key={index}
-          style={{ cursor: "pointer" }}
-          onClick={() => handleOpen(video.url)}
-        >
+        <Card bg={"dark"} key={index} style={{ cursor: "pointer" }}>
           <Card.Section>
             {video.url.includes("youtube.com") ? (
               <iframe
@@ -78,43 +59,3 @@ const VideoCard: React.FC<VideoCardProps> = ({ videos }) => {
 };
 
 export default VideoCard;
-
-{
-  /* <Modal
-        opened={open}
-        onClose={handleClose}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box
-          style={{
-            width: "80%",
-            maxWidth: 800,
-            backgroundColor: "background.paper",
-            padding: "16px",
-            borderRadius: "8px",
-          }}
-        >
-          {currentVideoUrl.includes("youtube.com") ? (
-            <iframe
-              width="100%"
-              height="450px"
-              src={getIframeSrc(currentVideoUrl)}
-              title="Video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          ) : (
-            <video
-              controls
-              style={{ width: "100%" }}
-              preload="metadata"
-              src={currentVideoUrl}
-            ></video>
-          )}
-        </Box>
-      </Modal> */
-}

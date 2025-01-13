@@ -1,66 +1,44 @@
-import { Group, TextInput } from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { Button, Group, Image } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { IconCircleDashedPlus } from "@tabler/icons-react";
+import { useState } from "react";
+import aluraImag from "../../../assets/aluraflix.jpg";
+import { NewVideo } from "../../../components/NewVideo";
+import SearchBar from "./SearchBar";
 
 export const Navbar = () => {
   const isMobile = useMediaQuery("(max-width: 750px)");
-  const [opened, { toggle }] = useDisclosure(false);
-
-  const links = [
-    { link: "/about", label: "Features" },
-    { link: "/pricing", label: "Pricing" },
-    { link: "/learn", label: "Learn" },
-    { link: "/community", label: "Community" },
-  ];
-
-  const items = links.map((link) => (
-    <a
-      key={link.label}
-      href={link.link}
-      style={{
-        textDecoration: "none",
-        color: "inherit",
-        fontWeight: "500",
-        fontSize: "16px",
-        padding: "8px 12px",
-        transition: "color 0.3s ease",
-        cursor: "pointer",
-      }}
-      onClick={(event) => event.preventDefault()}
-    >
-      {link.label}
-    </a>
-  ));
-
+  const [opened, setModal] = useState(false);
   return (
-    <header
-      style={{
-        color: "#fff",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 20px",
-      }}
-    >
-      <Group
+    <>
+      <NewVideo close={() => setModal(!opened)} open={opened} />
+      <header
         style={{
+          color: "#fff",
           display: "flex",
+          justifyContent: "space-between",
           alignItems: "center",
-          marginLeft: isMobile ? "0" : "50px",
-          gap: "15px",
+          padding: "10px 20px",
         }}
       >
-        <nav
+        <Image style={{ height: "50px" }} src={aluraImag} />
+        <Group
           style={{
-            display: isMobile ? "none" : "flex",
-            gap: "10px",
-            color: "white",
+            display: "flex",
+            alignItems: "center",
+            marginLeft: isMobile ? "0" : "50px",
+            gap: "15px",
           }}
         >
-          {items}
-        </nav>
-
-        <TextInput />
-      </Group>
-    </header>
+          <SearchBar />
+        </Group>
+        <Button
+          rightSection={<IconCircleDashedPlus />}
+          onClick={() => setModal(!opened)}
+        >
+          Nuevo
+        </Button>
+      </header>
+    </>
   );
 };

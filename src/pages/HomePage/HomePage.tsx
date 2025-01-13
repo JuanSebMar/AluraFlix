@@ -1,11 +1,10 @@
-import { Container, Title } from "@mantine/core";
+import { Container } from "@mantine/core";
 import { videos } from "../../common/constans/dataDisplay/data";
 import VideoCard from "./components/VideoCard";
 
 export const HomePage = () => {
   return (
-    <Container fluid>
-      <Title c={"#ffff"}>Alura flix</Title>
+    <Container fluid p={50}>
       <VideoCard videos={videos} />
     </Container>
   );
