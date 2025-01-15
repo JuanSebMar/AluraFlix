@@ -2,11 +2,11 @@ import { Autocomplete } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { FilterVideoModal } from "../../../components/FilterVideoModal";
-import { useVideo } from "../../../context/VideoContext";
+import { useVideoProvider } from "../../../hooks/useVideoProvider";
 
 const SearchBar = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { search, setSearch, videos, filteredVideos } = useVideo();
+  const { search, setSearch, video } = useVideoProvider({});
 
   const onInputChange = ({ target }: any) => {
     const { value } = target;
@@ -30,7 +30,7 @@ const SearchBar = () => {
       <FilterVideoModal
         open={modalOpen}
         onClose={handleCloseModal}
-        videos={filteredVideos}
+        videos={video}
       />
     </>
   );
