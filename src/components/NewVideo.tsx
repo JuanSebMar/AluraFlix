@@ -3,11 +3,11 @@ import { useForm } from "@mantine/form";
 import { IVideo } from "../common/interfaces/video.interfaces";
 import { useVideoProvider } from "../hooks/useVideoProvider";
 
-export const NewVideo = ({ open, close }) => {
-  const { handleSubmit } = useVideoProvider({ close });
+export const NewVideo = ({ open, close, videoToEdit }) => {
+  const { handleSubmit, handleEdit } = useVideoProvider({ close, videoToEdit });
 
   const form = useForm<IVideo>({
-    initialValues: {
+    initialValues: videoToEdit || {
       id: "",
       category: "",
       title: "",
@@ -21,7 +21,15 @@ export const NewVideo = ({ open, close }) => {
     <Modal
       opened={open}
       onClose={close}>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (videoToEdit) {
+            handleEdit(Number(videoToEdit.id), form.values);
+          } else {
+            handleSubmit(form.values);
+          }
+        }}>
         <TextInput
           label="Título del Video"
           name="title"
@@ -42,8 +50,8 @@ export const NewVideo = ({ open, close }) => {
         />
         <TextInput
           label="Imagen"
-          name="category"
-          placeholder="Escribe la categoría del video"
+          name="image"
+          placeholder="Escribe la URL de la imagen del video"
           {...form.getInputProps("image")}
         />
         <TextInput
@@ -52,13 +60,13 @@ export const NewVideo = ({ open, close }) => {
           placeholder="Ingresa la URL del video"
           {...form.getInputProps("url")}
         />
-        <Flex justify={"center"}>
+        <Flex justify="center">
           <Button
             mt={10}
             type="submit"
             variant="contained"
             color="primary">
-            Guardar Información
+            {videoToEdit ? "Actualizar" : "Guardar Información"}
           </Button>
         </Flex>
       </form>

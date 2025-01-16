@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NewVideo } from "../../../components/NewVideo";
 import { useVideoProvider } from "../../../hooks/useVideoProvider";
 
@@ -26,9 +26,9 @@ interface VideoCardProps {
 }
 
 const VideoCard: React.FC<VideoCardProps> = ({ videos }) => {
-  const { handleEdit, handleDelete } = useVideoProvider({});
-
+  const { handleDelete } = useVideoProvider({});
   const [opened, setModal] = useState(false);
+  const [videoToEdit, setVideoToEdit] = useState<IVideo | null>(null);
 
   const getIframeSrc = (url: string) => {
     if (url.includes("youtube.com/watch")) {
@@ -36,14 +36,15 @@ const VideoCard: React.FC<VideoCardProps> = ({ videos }) => {
     }
     return url;
   };
+  useEffect(() => {}, [videoToEdit]);
 
   return (
     <>
       <NewVideo
-        close={() => setModal(!opened)}
+        close={() => setModal(false)}
         open={opened}
+        videoToEdit={videoToEdit}
       />
-
       <SimpleGrid cols={{ base: 2, lg: 2 }}>
         {videos?.map((video, index) => (
           <Card
@@ -86,18 +87,18 @@ const VideoCard: React.FC<VideoCardProps> = ({ videos }) => {
                 <ThemeIcon>
                   <Tooltip label={"Editar video"}>
                     <IconEdit
-                      onClick={() => handleEdit}
+                      onClick={() => {
+                        setVideoToEdit(video);
+                        setModal(true);
+                      }}
                       size={20}
                     />
                   </Tooltip>
                 </ThemeIcon>
-                <ThemeIcon
-                  style={{
-                    backgroundColor: "red",
-                  }}>
+                <ThemeIcon style={{ backgroundColor: "red" }}>
                   <Tooltip label={"Borrar video"}>
                     <IconTrash
-                      onClick={() => handleDelete(video.id as any)}
+                      onClick={() => handleDelete(Number(video.id))}
                       size={25}
                     />
                   </Tooltip>

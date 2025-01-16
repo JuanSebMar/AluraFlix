@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { VIDEO_DATA } from "../common/constans/dataDisplay/data";
 import { IVideo } from "../common/interfaces/video.interfaces";
 
-export const useVideoProvider = ({ close }: { close?: any }) => {
-  const [search, setSearch] = useState("");
-  const [video, setVideo] = useState<IVideo[]>();
+export const useVideoProvider = ({
+  close,
+  videoToEdit,
+}: {
+  close?: any;
+  videoToEdit?: IVideo;
+}) => {
+  const [video, setVideo] = useState<IVideo[]>([]);
 
   const handleSubmit = (values: IVideo) => {
     let currentData: IVideo[] = [];
@@ -59,7 +64,6 @@ export const useVideoProvider = ({ close }: { close?: any }) => {
         ...updatedValues,
       };
       localStorage.setItem("videoData", JSON.stringify(currentData));
-      console.log("Video editado:", currentData[videoIndex]);
     } else {
       console.error(`No se encontró un video con el ID: ${id}`);
     }
@@ -89,7 +93,6 @@ export const useVideoProvider = ({ close }: { close?: any }) => {
     }
 
     localStorage.setItem("videoData", JSON.stringify(updatedData));
-    console.log(`Video con ID: ${id} eliminado.`);
   };
 
   useEffect(() => {
@@ -106,14 +109,13 @@ export const useVideoProvider = ({ close }: { close?: any }) => {
         console.error("Error parsing data from localStorage:", error);
       }
     }
-  }, [video]);
+  }, []);
 
   return {
     video,
-    search,
-    setSearch,
     handleSubmit,
     handleEdit,
     handleDelete,
+    videoToEdit,
   };
 };
