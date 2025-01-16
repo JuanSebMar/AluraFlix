@@ -1,6 +1,6 @@
 import { IVideo } from "../../interfaces/video.interfaces";
 
-export const videos: IVideo[] = [
+export const VIDEO_DATA: IVideo[] = [
   {
     id: "1",
     title: "Mastering React Hooks",
