@@ -10,10 +10,6 @@ const theme = createTheme({
   fontFamilyMonospace: "Helvetica",
   headings: { fontFamily: "Handgotn" },
   primaryShade: 8,
-  // colors: {
-  //   primary,
-  //   secondary,
-  // },
 });
 
 createRoot(document.getElementById("root")!).render(
